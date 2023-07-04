@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form>
+      <label for="petName"> Pet Name:</label>
+      <input type="textfield" id="petName" />
+      <br />
+
+      <label for="ownerName"> Owner Name:</label>
+      <input type="textfield" id="ownerName" />
+      <br />
+
+      <label for="species"> Species:</label>
+      <input type="textfield" id="species" />
+      <br />
+
+      <label for="breed"> Breed:</label>
+      <input type="textfield" id="breed" />
+      <br />
+
+      <input type="button" value="Aggiungi pet" id="addPet" />
+      <input type="button" value="Compara con il precedente" id="comparePet" />
+    </form>
+
+    <script>
+      const User = function (_firstName, _lastName, _age, _location) {
+        ;(this.firstName = _firstName),
+          (this.lastName = _lastName),
+          (this.age = _age),
+          (this.location = _location)
+        this.compare = function (user2) {
+          if (user2.age > this.age)
+            return user2.firstName + " è più grande di " + this.firstName
+          return this.firstName + " è più grande di " + user2.firstName
+        }
+      }
+
+      const u1 = new User("Alessio", "Portacci", 25, "Roma")
+      const u2 = new User("Ayeye", "Brazof", 40, "Milano")
+      console.log(u1.compare(u2))
+
+      const Pet = function (_petName, _ownerName, _species, _breed) {
+        ;(this.petName = _petName),
+          (this.ownerName = _ownerName),
+          (this.species = _species),
+          (this.breed = _breed)
+        this.sameOwner = function (pet2) {
+          if (this.ownerName === pet2.ownerName) return true
+          return false
+        }
+      }
+
+      const petList = []
+      let i = 0
+
+      const name = document.getElementById("petName").value
+      const owner = document.getElementById("ownerName").value
+      const species = document.getElementById("species").value
+      const breed = document.getElementById("breed").value
+
+      const save = document.getElementById("addPet")
+      save.addEventListener("click", function (e) {
+        e.preventDefault()
+        petList.push(
+          Pet(
+            document.getElementById("petName").value,
+            document.getElementById("ownerName").value,
+            document.getElementById("species").value,
+            document.getElementById("breed").value
+          )
+        )
+        i++
+        console.log(petList)
+      })
+
+      const compare = document.getElementById("comparePet")
+      compare.addEventListener("click", function (e) {
+        e.preventDefault()
+        alert(petList[i].sameOwner(petList[i - 1]))
+      })
+    </script>
+  </body>
+</html>
